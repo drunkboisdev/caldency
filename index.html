@@ -7,8 +7,7 @@
             function generateDate() {
                 const d = new Date();
 
-                function isLeapYear() {
-                    const year = d.getFullYear();
+                function isLeapYear(year = d.getFullYear()) {
                     if (year % 400 === 0) return true;
                     if (year % 100 === 0) return false;
                     return year % 4 === 0;
@@ -24,20 +23,26 @@
                 }
                 /*
                 the plan:
-                - find day relative to month
                 - generate random year
                 - find day relative to year
                 */
                 // find day of the year
                 const curMonth = d.getMonth();
-                let dayOfYear = findDayOfYear(curMonth);
+                const dayOfYear = findDayOfYear(curMonth);
 
-                // generate a random month to be displayed
-                let randomMonth = Math.floor(Math.random() * 12);
-                // calculate day of the month relative to that month
-                let dayOfMonth = dayOfYear - findDayOfYear(randomMonth) + d.getDate();
-                
-                document.getElementById("date").textContent = `Today is ${data[randomMonth][0]} ${dayOfMonth}`;
+                // generate a random month to be displayed/calculate day of that month
+                const randomMonth = Math.floor(Math.random() * 12);
+                const dayOfMonth = dayOfYear - findDayOfYear(randomMonth) + d.getDate();
+
+                // generate a random year (from 1 AD to now)
+                const randomYear = Math.floor(Math.random() * d.getFullYear()) + 1;
+                let extraYearDays = 0;
+                for (let i = randomYear; i < d.getFullYear(); i++) {
+                    extraYearDays += 365;
+                    if (isLeapYear(i)) extraYearDays++;
+                }
+
+                document.getElementById("date").textContent = `Today is ${data[randomMonth][0]} ${dayOfMonth + extraYearDays}, ${randomYear}`;
             }
             addEventListener("load", generateDate);
         </script>
