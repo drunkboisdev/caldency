@@ -4,15 +4,16 @@
         <script type="module">
             import data from "./months.json" assert { type: "json" };
 
+            const d = new Date();
             function generateDate() {
-                const d = new Date();
-
                 function isLeapYear(year = d.getFullYear()) {
                     if (year % 400 === 0) return true;
                     if (year % 100 === 0) return false;
                     return year % 4 === 0;
                 }
-                function findDayOfYear(month) {
+
+                // find day of the year, given any month
+                function findDayOfYear(month = d.getMonth()) {
                     let res = d.getDate();
                     while (month > 0) {
                         month--;
@@ -21,14 +22,8 @@
                     }
                     return res;
                 }
-                /*
-                the plan:
-                - generate random year
-                - find day relative to year
-                */
-                // find day of the year
-                const curMonth = d.getMonth();
-                const dayOfYear = findDayOfYear(curMonth);
+
+                const dayOfYear = findDayOfYear();
 
                 // generate a random month to be displayed/calculate day of that month
                 const randomMonth = Math.floor(Math.random() * 12);
