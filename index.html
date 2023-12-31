@@ -4,15 +4,37 @@
         <script type="module">
             import data from "./months.json" assert { type: "json" };
 
-            const months = new Map();
-            Object.keys(data).forEach((v) => { months.set(v, data[v]); });
-
             function generateDate() {
                 const d = new Date();
 
+                function isLeapYear() {
+                    const year = d.getFullYear();
+                    if (year % 400 === 0) return true;
+                    if (year % 100 === 0) return false;
+                    return year % 4 === 0;
+                }
+
                 let dayOfYear = 0;
+                /*
+                the plan:
+                - find day of the year
+                - generate random month
+                - find day relative to month
+                - generate random year
+                - find day relative to year
+                */
+                let curMonth = d.getMonth();
+                dayOfYear = d.getDate();
+                while (curMonth > 0) {
+                    curMonth--;
+                    dayOfYear += data[curMonth][1];
+                    if (isLeapYear() && curMonth === 2) dayOfYear++;
+                }
+
+                const randomMonth = Math.floor(Math.random() * 12);
                 
-                //document.getElementById("date").textContent = "test";
+                
+                document.getElementById("date").textContent = `Today is ${dayOfYear}`;
             }
             addEventListener("load", generateDate);
         </script>
