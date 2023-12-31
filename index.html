@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="module">
+            import data from "./months.json" assert { type: "json" };
+
+            const months = new Map();
+            Object.keys(data).forEach((v) => { months.set(v, data[v]); });
+
+            function generateDate() {
+                const d = new Date();
+
+                let dayOfYear = 0;
+                
+                //document.getElementById("date").textContent = "test";
+            }
+            addEventListener("load", generateDate);
+        </script>
+    </head>
+    <body>
+        <h1 id="date" style="height: 100%; font-family: 'Courier New', Courier, monospace; font-size: 100px; text-align: center;">Sorry, an error has occurred.</h1>
+    </body>
+</html>
