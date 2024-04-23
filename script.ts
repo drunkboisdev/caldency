@@ -1,16 +1,17 @@
+// prefix sum array my beloved
 const data: any[] = [
     ["January", 31],
-    ["February", 28],
-    ["March", 31],
-    ["April", 30],
-    ["May", 31],
-    ["June", 30],
-    ["July", 31],
-    ["August", 31],
-    ["September", 30],
-    ["October", 31],
-    ["November", 30],
-    ["December", 31]
+    ["February", 59],
+    ["March", 90],
+    ["April", 120],
+    ["May", 151],
+    ["June", 181],
+    ["July", 212],
+    ["August", 243],
+    ["September", 273],
+    ["October", 304],
+    ["November", 334],
+    ["December", 365]
 ];
 
 
@@ -25,11 +26,9 @@ function generateDate() {
     // find day of the year, given any month
     function findDayOfYear(month: number): number {
         let res: number = d.getDate();
-        while (month > 0) {
-            month--;
-            res += data[month][1];
-            if (isLeapYear && month === 2) res++;
-        }
+
+        if (month > 0) res += data[month-1][1];
+        if (isLeapYear && month === 2) res++;
         return res;
     }
 
